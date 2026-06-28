@@ -21,3 +21,12 @@ function calculate() {
         display.value = 'Error';
     }
 }
+  function updateButtonState(){
+   const Lastchar = display.value.slice(-1);
+   const operators = ['+', '-', '*', '/'];.includes(Lastchar);
+   if (operators.includes(Lastchar)) {
+       display.value = display.value.slice(0, -1); + input;     
+   } else {
+       display.value += input;  
+   }
+  }
