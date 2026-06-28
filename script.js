@@ -1,32 +1,41 @@
 // CALCULATOR SCRIPT    
 
 const display = document.getElementById('display');
+const operators = ['+', '-', '*', '/'];
 
 function appendToDisplay(input) {
     display.value += input;
+    updateButtonState();
 }
 
 function appendOperator(input) {
-    appendToDisplay(input);
+    const lastChar = display.value.slice(-1);
+    if (!display.value || operators.includes(lastChar)) {
+        return;
+    }
+    display.value += input;
+    updateButtonState();
 }
 
 function clearDisplay() {
     display.value = '';
+    updateButtonState();
 }
 
 function calculate() {
-    try {   
+    try {
         display.value = eval(display.value);
     } catch (error) {
         display.value = 'Error';
     }
+    updateButtonState();
 }
-  function updateButtonState(){
-   const Lastchar = display.value.slice(-1);
-   const operators = ['+', '-', '*', '/'];.includes(Lastchar);
-   if (operators.includes(Lastchar)) {
-       display.value = display.value.slice(0, -1); + input;     
-   } else {
-       display.value += input;  
-   }
-  }
+
+function updateButtonState() {
+    const lastChar = display.value.slice(-1);
+    const isOperator = operators.includes(lastChar);
+    const operatorButtons = document.querySelectorAll('.operator');
+    operatorButtons.forEach(btn => btn.disabled = isOperator);
+}
+
+document.addEventListener('DOMContentLoaded', updateButtonState);
